@@ -8,8 +8,17 @@
  * @since 1.0.0
  */
 
-add_action( 'elementor/dynamic_tags/register', function ( $dynamic_tags_manager ) {
-    require_once( __DIR__ . '/dynamic-tags/tag-cookie.php' );
+function prek_dynamic_tag_group($dynamic_tags)
+{
+    \Elementor\Plugin::instance()->dynamic_tags->register_group('prek', [
+        'title' => esc_html__('Prek Addons', 'prek-jetengine-addons')
+    ]);
+}
 
-    $dynamic_tags_manager->register( new \Elementor_Dynamic_Tag_Cookie() );
-} );
+add_action('elementor/dynamic_tags/register_tags', 'prek_dynamic_tag_group');
+
+add_action('elementor/dynamic_tags/register', function ($dynamic_tags_manager) {
+    require_once(__DIR__ . '/dynamic-tags/tag-cookie.php');
+
+    $dynamic_tags_manager->register(new \Elementor_Dynamic_Tag_Cookie());
+});
