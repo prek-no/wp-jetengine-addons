@@ -21,25 +21,65 @@ class Macro_CookieValue extends Jet_Engine_Base_Macros {
      * An empty array may be returned if the macro has no arguments
      */
     public function macros_args() {
-        return array(
-            'cookie_name'    => array(
+        return [
+            'cookie_name'    => [
                 'label'   => 'Cookie name',
-                'type'    => 'text',
+                'type' => \Elementor\Controls_Manager::TEXT,
                 'default' => '',
-            ),
-        );
+            ],
+            'cookie_is_json'    => [
+                'label' => esc_html__('JSON Object?', 'prek-jetengine-addons'),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => esc_html__('Yes', 'textdomain'),
+                'label_off' => esc_html__('No', 'textdomain'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ],
+            'cookie_path' => [
+                'label' => esc_html__('Cookie Path', 'prek-jetengine-addons'),
+                'description' => esc_html__('You can use dot notation. E.g: user.email', 'prek-jetengine-addons'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'condition' => [
+                    'cookie_is_json' => 'yes',
+                ],
+                'dynamic' => [
+                    'active' => true,
+                ]
+            ]
+        ];
     }
 
     /**
      * Macros callback - gets existing cookie value
      */
-    public function macros_callback( $args = array() ) {
-        $cookieName = ! empty( $args['cookie_name'] ) ? $args['cookie_name'] : null;
+    public function macros_callback( $args = []) {
+        $name = !empty( $args['cookie_name'] ) ? $args['cookie_name'] : null;
+        $isJson = (!empty($args['cookie_is_json']) && $args['cookie_is_json'] === 'yes');
+        $path = !empty($args['cookie_path']) ? $args['cookie_path'] : null;
 
-        if (!empty($_COOKIE[$cookieName])) {
-            return esc_html($_COOKIE[$cookieName]);
+        if (!isset($_COOKIE[$name]) || empty($_COOKIE[$name])) {
+            return '';
         }
 
-        return '';
+        if ($isJson) {
+            return $this->readArray(json_decode(stripslashes($_COOKIE[$name]), true), $path);
+        }
+
+        return esc_html($_COOKIE[ $name ]);
+    }
+
+    // Create a function for reading a multi-dimensional array using dot notation
+    public function readArray($array, $path)
+    {
+        $path = explode('.', $path);
+        $current = $array;
+        foreach ($path as $key) {
+            if (isset($current[$key])) {
+                $current = $current[$key];
+            } else {
+                return null;
+            }
+        }
+        return $current;
     }
 }
