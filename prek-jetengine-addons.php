@@ -3,7 +3,7 @@
  * Plugin Name: Prek - JetEngine Addons
  * Description: Macros, dynamic tags and other addons for JetEngine.
  * Plugin URI:  https://prek.no
- * Version:     1.0.5
+ * Version:     1.0.6
  * Author:      Prek AS
  * Author URI:  https://prek.no
  * Text Domain: prek-jetengine-addons
