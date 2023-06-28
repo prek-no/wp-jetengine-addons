@@ -1,6 +1,6 @@
 <?php
 
-class Macro_CookieValue extends \Jet_Engine_Base_Macros {
+class Macro_CookieValue extends Jet_Engine_Base_Macros {
 
     /**
      * Macros tag - this macro will look like %current_user_prop|ID% if typed manually
