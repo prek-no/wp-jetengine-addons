@@ -132,7 +132,7 @@ class Elementor_Dynamic_Tag_Cookie extends \Elementor\Core\DynamicTags\Tag
         $path = $this->get_settings('cookie_path');
 
         if (!isset($_COOKIE[$name]) || empty($_COOKIE[$name])) {
-            echo 'No cookie found';
+            echo '';
             return;
         }
 
