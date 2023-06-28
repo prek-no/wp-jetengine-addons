@@ -19,6 +19,8 @@ add_action('elementor/dynamic_tags/register_tags', 'prek_dynamic_tag_group');
 
 add_action('elementor/dynamic_tags/register', function ($dynamic_tags_manager) {
     require_once(__DIR__ . '/dynamic-tags/tag-cookie.php');
+    require_once(__DIR__ . '/dynamic-tags/tag-current-url.php');
 
     $dynamic_tags_manager->register(new \Elementor_Dynamic_Tag_Cookie());
+    $dynamic_tags_manager->register(new \Elementor_Dynamic_Tag_Current_Url());
 });
