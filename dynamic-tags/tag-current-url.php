@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
  *
  * @since 1.0.0
  */
-class Elementor_Dynamic_Tag_Current_Url extends \Elementor\Core\DynamicTags\Tag
+class Prek_Dynamic_Tag_Current_Url extends \Elementor\Core\DynamicTags\Tag
 {
     /**
      * Get dynamic tag name.
